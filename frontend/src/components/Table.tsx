@@ -23,12 +23,25 @@ export const Table = () => {
         <thead>
           <tr>
             <th>City</th>
+            <th>Country</th>
+            <th>Sub-country</th>
+            <th>Website</th>
           </tr>
         </thead>
         <tbody>
           {cities?.map((city, index) => (
             <tr key={index}>
               <td>{city.name}</td>
+              <td>{city.country}</td>
+              <td>{city.subcountry}</td>
+              <td>
+                <a
+                  href={`https://www.geonames.org/${city.geonameid}/`}
+                  target="_blank"
+                >
+                  See it in Geonames website
+                </a>
+              </td>
             </tr>
           ))}
         </tbody>
