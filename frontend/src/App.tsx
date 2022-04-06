@@ -3,8 +3,16 @@ import { Table } from "./components/Table";
 import { Sidebar } from "./components/Sidebar";
 import { useState } from "react";
 
+type Country = {
+  name: string;
+  count: number;
+};
+
 function App() {
-  const [activeCountry, setActiveCountry] = useState<string>("");
+  const [activeCountry, setActiveCountry] = useState<Country>({
+    name: "",
+    count: 0,
+  });
 
   return (
     <div className="App">

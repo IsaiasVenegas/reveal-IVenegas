@@ -3,12 +3,12 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 type Country = {
   name: string;
-  count?: number;
+  count: number;
 };
 
 interface IProps {
-  activeCountry: string;
-  setActiveCountry: Dispatch<SetStateAction<string>>;
+  activeCountry: Country;
+  setActiveCountry: Dispatch<SetStateAction<Country>>;
 }
 
 export const Sidebar = (props: IProps) => {
@@ -28,8 +28,10 @@ export const Sidebar = (props: IProps) => {
           <button
             key={0}
             title={`Show all cities`}
-            className={props.activeCountry === "all" ? "primary" : "secondary"}
-            onClick={() => props.setActiveCountry("all")}
+            className={
+              props.activeCountry.name === "all" ? "primary" : "secondary"
+            }
+            onClick={() => props.setActiveCountry({ name: "all", count: 500 })}
           >
             All cities
           </button>
@@ -39,9 +41,16 @@ export const Sidebar = (props: IProps) => {
             key={index + 1}
             title={`Filter cities of ${country.name}`}
             className={
-              props.activeCountry === country.name ? "primary" : "secondary"
+              props.activeCountry.name === country.name
+                ? "primary"
+                : "secondary"
             }
-            onClick={() => props.setActiveCountry(country.name)}
+            onClick={() =>
+              props.setActiveCountry({
+                name: country.name,
+                count: country.count,
+              })
+            }
           >
             {country.name} ({country.count})
           </button>
