@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Country, setCountry } from "../types";
+import { getCountries } from "./actions";
 
 /**
  * Manage countries loading
@@ -17,9 +18,11 @@ export const useCountries = (
 
   // Load a list of countries
   useEffect(() => {
-    fetch("http://localhost:3001/api/countries")
-      .then((response) => response.json())
-      .then(setCountries);
+    const fetchData = async () => {
+      const json = await getCountries();
+      return json;
+    };
+    fetchData().then(setCountries);
   }, []);
 
   return (

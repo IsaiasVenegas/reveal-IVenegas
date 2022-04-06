@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { City } from "../types";
+import { getCities } from "./actions";
 
 /**
  * Manage cities loading
@@ -19,12 +20,13 @@ export const useCities = (
   // Load a list of cities using pagination and country filtering
   useEffect(() => {
     if (country !== "") {
-      let api = "http://localhost:3001/api/cities";
-      let pagination = `?from=${lowerLimit * step}&limit=${step}`;
-      let filter = country === "all" ? "" : `&country=${country}`;
-      fetch(`${api}${pagination}${filter}`)
-        .then((response) => response.json())
-        .then(setCities);
+      const fetchData = async () => {
+        let pagination = `?from=${lowerLimit * step}&limit=${step}`;
+        let filter = country === "all" ? "" : `&country=${country}`;
+        const json = await getCities(pagination + filter);
+        return json;
+      };
+      fetchData().then(setCities);
       window.scrollTo({
         top: 0,
         left: 0,

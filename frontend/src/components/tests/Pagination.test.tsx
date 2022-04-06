@@ -19,7 +19,7 @@ test("renders buttons", async () => {
   expect(buttons).toHaveLength(5);
 });
 
-test("calls setter when the button is clicked", async () => {
+test("changes pages", async () => {
   const setCurrentPage = jest.fn();
   render(
     <Pagination
@@ -39,9 +39,10 @@ test("calls setter when the button is clicked", async () => {
   fireEvent.click(screen.getByTitle("Go to last page"));
   fireEvent.click(screen.getByTitle("Go to first page"));
   await waitFor(() => expect(setCurrentPage).toHaveBeenCalledTimes(4));
+  expect(setCurrentPage).toHaveBeenLastCalledWith(0);
 });
 
-test("calls setter when the selector is changed", async () => {
+test("changes page size", async () => {
   const setPageSize = jest.fn();
   render(
     <Pagination
@@ -61,5 +62,5 @@ test("calls setter when the selector is changed", async () => {
   fireEvent.change(dropdown, {
     target: { value: "20" },
   });
-  expect(setPageSize).toBeCalled();
+  expect(setPageSize).toBeCalledWith(20);
 });
