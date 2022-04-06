@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Table } from "./Table";
+import { Table } from "../Table";
 
 test("renders title headers", () => {
   render(<Table activeCountry={{ name: "test", count: 1 }} />);
