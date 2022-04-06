@@ -11,7 +11,8 @@ import { Pagination } from "../Pagination";
  */
 export const usePagination = (country: string, total: number) => {
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const sizeOptions = [10, 12, 20];
+  const [pageSize, setPageSize] = useState<number>(sizeOptions[0]);
 
   // Set actual page state to zero when country or page size has changed
   useEffect(() => {
@@ -71,6 +72,7 @@ export const usePagination = (country: string, total: number) => {
     <Pagination
       page={currentPage}
       setStatePage={setCurrentPage}
+      sizeOptions={sizeOptions}
       pageSize={pageSize}
       setStatePageSize={setPageSize}
       count={total}

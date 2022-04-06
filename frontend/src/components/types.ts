@@ -26,6 +26,7 @@ export interface TableProps {
 export interface PaginationProps {
   page: number;
   setStatePage: Dispatch<SetStateAction<number>>;
+  sizeOptions: number[];
   pageSize: number;
   setStatePageSize: Dispatch<SetStateAction<number>>;
   count: number;

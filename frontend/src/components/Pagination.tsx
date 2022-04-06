@@ -85,30 +85,16 @@ export const Pagination = (props: PaginationProps) => {
         onChange={(e) => props.setStatePageSize(Number(e.target.value))}
         data-testid="select"
       >
-        <option
-          key={0}
-          value={10}
-          data-testid="select-option"
-          aria-labelledby="page size 10"
-        >
-          10
-        </option>
-        <option
-          key={1}
-          value={12}
-          data-testid="select-option"
-          aria-labelledby="page size 12"
-        >
-          12
-        </option>
-        <option
-          key={2}
-          value={20}
-          data-testid="select-option"
-          aria-labelledby="page size 20"
-        >
-          20
-        </option>
+        {props.sizeOptions.map((size, key) => (
+          <option
+            key={key}
+            value={size}
+            data-testid="select-option"
+            aria-labelledby={`page size ${size}`}
+          >
+            {size}
+          </option>
+        ))}
       </select>
       <label htmlFor="selectItems" aria-labelledby="page size label">
         Items per page
