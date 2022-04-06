@@ -27,15 +27,18 @@ export const useCountries = (
       {countries && (
         <div>
           <button
+            type="button"
             key={0}
             title={`Show all cities`}
             className={activeCountry.name === "all" ? "primary" : "secondary"}
             onClick={() => setActiveCountry({ name: "all", count: 500 })}
+            aria-labelledby="all cities button"
           >
             All cities
           </button>
           {countries.map((country, index) => (
             <button
+              type="button"
               key={index + 1}
               title={`Filter cities of ${country.name}`}
               className={
@@ -47,6 +50,7 @@ export const useCountries = (
                   count: country.count,
                 })
               }
+              aria-labelledby={`${country.name} button`}
             >
               {country.name} ({country.count})
             </button>
