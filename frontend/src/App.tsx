@@ -4,6 +4,11 @@ import { Sidebar } from "./components/Sidebar";
 import { Country } from "./components/types";
 import { useState } from "react";
 
+/**
+ * App component
+ * Share "activeCountry" state between Sidebar and Table
+ * @returns
+ */
 function App() {
   const [activeCountry, setActiveCountry] = useState<Country>({
     name: "",

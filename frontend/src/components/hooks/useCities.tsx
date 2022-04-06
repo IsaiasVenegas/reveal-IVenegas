@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import { City } from "../types";
 
+/**
+ * Manage cities loading
+ * Display a row for each city loaded
+ * @param country Country name
+ * @param lowerLimit Left limit of the loaded interval
+ * @param step Number to calculte right limit of the loaded interval
+ * @returns
+ */
 export const useCities = (
   country: string,
   lowerLimit: number,
@@ -8,6 +16,7 @@ export const useCities = (
 ) => {
   const [cities, setCities] = useState<City[] | null>(null);
 
+  // Load a list of cities using pagination and country filtering
   useEffect(() => {
     if (country !== "") {
       let api = "http://localhost:3001/api/cities";

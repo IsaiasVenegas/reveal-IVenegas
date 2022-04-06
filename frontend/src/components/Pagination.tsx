@@ -1,5 +1,12 @@
 import { PaginationProps } from "./types";
 
+/**
+ * Pagination component
+ * Display a list of buttons and a page size selector
+ * Set current page and page size
+ * @param props
+ * @returns
+ */
 export const Pagination = (props: PaginationProps) => {
   return (
     <div>

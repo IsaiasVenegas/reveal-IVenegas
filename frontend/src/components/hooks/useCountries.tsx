@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
 import { Country, setCountry } from "../types";
 
+/**
+ * Manage countries loading
+ * Display a button for each country loaded
+ * Manage App state
+ * @param activeCountry Clicked country
+ * @param setActiveCountry Setter
+ * @returns
+ */
 export const useCountries = (
   activeCountry: Country,
   setActiveCountry: setCountry
 ) => {
   const [countries, setCountries] = useState<Country[] | null>(null);
 
+  // Load a list of countries
   useEffect(() => {
     fetch("http://localhost:3001/api/countries")
       .then((response) => response.json())

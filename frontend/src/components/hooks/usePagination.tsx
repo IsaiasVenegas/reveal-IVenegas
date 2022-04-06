@@ -1,18 +1,29 @@
 import { useEffect, useMemo, useState } from "react";
 import { Pagination } from "../Pagination";
 
+/**
+ * Manage table pages by calculating the number of elements
+ * to display from the total number of elements and
+ * the selected page size
+ * @param country Country name
+ * @param total Total number of elements
+ * @returns
+ */
 export const usePagination = (country: string, total: number) => {
-  const [actualPage, setActualPage] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(10);
 
+  // Set actual page state to zero when country or page size has changed
   useEffect(() => {
-    setActualPage(0);
+    setCurrentPage(0);
   }, [country, pageSize]);
 
+  // List of buttons displayed at left and right of current page
   const [leftRange, setLeftRange] = useState<number[]>([]);
   const [rightRange, setRightRange] = useState<number[]>([]);
   const rangeMax = 2;
 
+  // Calculate last page using the total number of elements and page size
   const lastPage = useMemo(() => {
     if (Math.floor(total / pageSize) === total / pageSize) {
       return Math.floor(total / pageSize) - 1;
@@ -20,14 +31,15 @@ export const usePagination = (country: string, total: number) => {
     return Math.floor(total / pageSize);
   }, [total, pageSize]);
 
+  // Update buttons at left and right of current page
   useEffect(() => {
     // Compute even distribution of pages at left and at right of current page
     // Add at most range max
     let upperLimit =
-      actualPage + rangeMax <= lastPage ? actualPage + rangeMax : lastPage;
-    let lowerLimit = actualPage - rangeMax >= 0 ? actualPage - rangeMax : 0;
-    let rightCount = upperLimit - actualPage;
-    let leftCount = actualPage - lowerLimit;
+      currentPage + rangeMax <= lastPage ? currentPage + rangeMax : lastPage;
+    let lowerLimit = currentPage - rangeMax >= 0 ? currentPage - rangeMax : 0;
+    let rightCount = upperLimit - currentPage;
+    let leftCount = currentPage - lowerLimit;
 
     // Add remaining page count to the right if there's no space by the left
     let tmp;
@@ -44,21 +56,21 @@ export const usePagination = (country: string, total: number) => {
 
     let leftPages: number[] = [],
       rightPages: number[] = [];
-    for (let i = lowerLimit; i < actualPage; i++) {
+    for (let i = lowerLimit; i < currentPage; i++) {
       leftPages.push(i);
     }
-    for (let i = actualPage + 1; i <= upperLimit; i++) {
+    for (let i = currentPage + 1; i <= upperLimit; i++) {
       rightPages.push(i);
     }
 
     setLeftRange(leftPages);
     setRightRange(rightPages);
-  }, [actualPage, lastPage]);
+  }, [currentPage, lastPage]);
 
   return [
     <Pagination
-      page={actualPage}
-      setStatePage={setActualPage}
+      page={currentPage}
+      setStatePage={setCurrentPage}
       pageSize={pageSize}
       setStatePageSize={setPageSize}
       count={total}
@@ -66,7 +78,7 @@ export const usePagination = (country: string, total: number) => {
       leftRange={leftRange}
       rightRange={rightRange}
     />,
-    actualPage,
+    currentPage,
     pageSize,
   ];
 };

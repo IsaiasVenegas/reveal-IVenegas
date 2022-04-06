@@ -2,14 +2,21 @@ import "./Table.css";
 import { TableProps } from "./types";
 import { useCities, usePagination } from "./hooks";
 
+/**
+ * Table component
+ * Display a table with cities using activeCountry state
+ * Display pagination buttons to move through the rows
+ * @param props
+ * @returns
+ */
 export const Table = (props: TableProps) => {
-  const [pagination, actualPage, pageSize] = usePagination(
+  const [pagination, currentPage, pageSize] = usePagination(
     props.activeCountry.name,
     props.activeCountry.count
   );
   const cities = useCities(
     props.activeCountry.name,
-    Number(actualPage),
+    Number(currentPage),
     Number(pageSize)
   );
 
