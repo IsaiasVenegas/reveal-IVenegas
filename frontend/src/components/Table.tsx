@@ -1,44 +1,17 @@
 import "./Table.css";
-import { useEffect, useState } from "react";
-import { Pagination } from "./Pagination";
+import { TableProps } from "./types";
+import { useCities, usePagination } from "./hooks";
 
-type City = {
-  name: string;
-  country?: string;
-  subcountry?: string;
-  geonameid?: number;
-};
-
-type Country = {
-  name: string;
-  count: number;
-};
-interface IProps {
-  activeCountry: Country;
-}
-
-export const Table = (props: IProps) => {
-  const [cities, setCities] = useState<City[] | null>(null);
-  const [actualPage, setActualPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(10);
-
-  useEffect(() => {
-    if (props.activeCountry.name !== "") {
-      let api = "http://localhost:3001/api/cities";
-      let pagination = `?from=${actualPage * pageSize}&limit=${pageSize}`;
-      let country =
-        props.activeCountry.name === "all"
-          ? ""
-          : `&country=${props.activeCountry.name}`;
-      fetch(`${api}${pagination}${country}`)
-        .then((response) => response.json())
-        .then(setCities);
-    }
-  }, [props.activeCountry, actualPage, pageSize]);
-
-  useEffect(() => {
-    setActualPage(0);
-  }, [props.activeCountry, pageSize]);
+export const Table = (props: TableProps) => {
+  const [pagination, actualPage, pageSize] = usePagination(
+    props.activeCountry.name,
+    props.activeCountry.count
+  );
+  const cities = useCities(
+    props.activeCountry.name,
+    Number(actualPage),
+    Number(pageSize)
+  );
 
   return (
     <div id="cities-table-wrapper">
@@ -58,31 +31,9 @@ export const Table = (props: IProps) => {
                 <th>Website</th>
               </tr>
             </thead>
-            <tbody>
-              {cities?.map((city, index) => (
-                <tr key={index}>
-                  <td>{city.name}</td>
-                  <td>{city.country}</td>
-                  <td>{city.subcountry}</td>
-                  <td>
-                    <a
-                      href={`https://www.geonames.org/${city.geonameid}/`}
-                      target="_blank"
-                    >
-                      See it in Geonames website
-                    </a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+            {cities}
           </table>
-          <Pagination
-            page={actualPage}
-            setStatePage={setActualPage}
-            count={props.activeCountry.count}
-            pageSize={pageSize}
-            setStatePageSize={setPageSize}
-          />
+          {pagination}
         </div>
       )}
     </div>

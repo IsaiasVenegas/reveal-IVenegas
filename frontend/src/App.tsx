@@ -1,12 +1,8 @@
 import "./App.css";
 import { Table } from "./components/Table";
 import { Sidebar } from "./components/Sidebar";
+import { Country } from "./components/types";
 import { useState } from "react";
-
-type Country = {
-  name: string;
-  count: number;
-};
 
 function App() {
   const [activeCountry, setActiveCountry] = useState<Country>({
