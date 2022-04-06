@@ -9,11 +9,11 @@ test("renders filters", async () => {
     />
   );
   const buttons = await screen.findAllByRole("button");
-  const expectedCountries = 244;
+  const expectedCountries = 1;
   expect(buttons).toHaveLength(1 + expectedCountries);
 });
 
-test("calls setter when a country is clicked", async () => {
+test("set 'all' as active country to avoid filtering cities", async () => {
   const setActiveCountry = jest.fn();
   render(
     <Sidebar
@@ -23,5 +23,5 @@ test("calls setter when a country is clicked", async () => {
   );
   const button = await screen.findByText("All cities");
   fireEvent.click(button);
-  expect(setActiveCountry).toBeCalled();
+  expect(setActiveCountry).toHaveBeenCalledWith({ name: "all", count: 500 });
 });
