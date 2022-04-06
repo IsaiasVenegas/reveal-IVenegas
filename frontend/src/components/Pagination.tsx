@@ -123,19 +123,36 @@ export const Pagination = (props: IProps) => {
       </div>
       <select
         name="page size selector"
+        id="selectItems"
         onChange={(e) => setPageSize(Number(e.target.value))}
+        data-testid="select"
       >
-        <option key={0} value={10} selected={props.pageSize === 10}>
+        <option
+          key={0}
+          value={10}
+          selected={props.pageSize === 10}
+          data-testid="select-option"
+        >
           10
         </option>
-        <option key={1} value={12} selected={props.pageSize === 12}>
+        <option
+          key={1}
+          value={12}
+          selected={props.pageSize === 12}
+          data-testid="select-option"
+        >
           12
         </option>
-        <option key={2} value={20} selected={props.pageSize === 20}>
+        <option
+          key={2}
+          value={20}
+          selected={props.pageSize === 20}
+          data-testid="select-option"
+        >
           20
         </option>
       </select>
-      <label>Items per page</label>
+      <label htmlFor="selectItems">Items per page</label>
     </div>
   );
 };
